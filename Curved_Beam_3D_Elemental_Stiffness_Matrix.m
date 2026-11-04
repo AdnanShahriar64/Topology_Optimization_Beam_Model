@@ -38,20 +38,7 @@ function [KeB,MeB] = Curved_Beam_3D_Elemental_Stiffness_Matrix( ...
 % open arc with independent endpoint DOFs, including when Theta=2*pi.
 % Does not include geometric stiffness, pressure, thermal loading or warping.
 
-if nargin < 11 || isempty(ky),  ky = 1;  end
-if nargin < 12 || isempty(kz),  kz = 1;  end
-if nargin < 13 || isempty(E),   E = 1;   end
-if nargin < 14 || isempty(rho), rho = 1; end
-
-values = {A,R,Theta,G,Ey,Ez,J,Ix,Iy,Iz,ky,kz,E,rho};
-for k = 1:numel(values)
-    validateattributes(values{k},{'numeric'}, ...
-        {'real','finite','scalar','positive'},mfilename,'input',k);
-end
 L = R*Theta;
-if ~isfinite(L) || L == 0
-    error('CurvedBeam:Length','R*Theta must be finite and positive.');
-end
 
 %% Section constitutive matrix
 D = diag([E*A, ky*G*A, kz*G*A, G*J, Ey*Iy, Ez*Iz]);
@@ -64,11 +51,10 @@ Bend   = local_B([0,1],Ns,R);
 C = Bstart;
 H = Bend-Bstart;
 
-%% Exact analytical stiffness integration over eta in [0,1]
-KeB = L*(C.'*D*C ...
-      + 0.5*(C.'*D*H + H.'*D*C) ...
-      + (1/3)*(H.'*D*H));
-KeB = 0.5*(KeB+KeB.');
+%% One-point (midpoint) integration -- removes membrane/shear locking
+Bmid = C + 0.5*H;
+KeB  = L*(Bmid.'*D*Bmid);
+KeB  = 0.5*(KeB+KeB.');
 
 %% Consistent mass: integral of interpolation'*inertia*interpolation
 % Inertia is diagonal for centroidal principal section axes.
