@@ -1,6 +1,6 @@
-function [T,a] = Transformation_Matrix_Gen(X1,X2,vref)
+function [T,a] = Transformation_Matrix_Gen(Nodes,IEN,e,vref)
 
-if nargin < 3 || isempty(vref)
+if nargin < 4 || isempty(vref)
   vref = [0 0 1];
 end
 
