@@ -1,4 +1,4 @@
-function [K] = Super_Element_Generator(Nodes,IEN,E,rho,PoRat,outer_radius,thickness)
+function [Kc,Mc,Fc] = Super_Element_Generator(Nodes,IEN,E,rho,PoRat,outer_radius,thickness)
 
 % IEN= IEN_L;
 % Nodes=Nodes_L;
@@ -13,7 +13,7 @@ function [K] = Super_Element_Generator(Nodes,IEN,E,rho,PoRat,outer_radius,thickn
 
   [ndof,nel,neq,nnp,LM]=Geometry_Model_Parameters_Preprocessor(Nodes,IEN,Type);
 
-  G=E/(2*(1+Mat_Prop.PoRat));
+  G=E/(2*(1+PoRat));
 
 % Get geometry data
 
