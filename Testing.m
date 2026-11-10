@@ -162,7 +162,7 @@ IEN_L(2,nArc) = 2;
 outer_radius=Geometry.Circular.Outer_Radius(Type(3,e));
 thickness=Geometry.Circular.Thickness(Type(3,e));
 
-[Ke] = Super_Element_Generator(Nodes_L,IEN_L,Mat_Prop.MoE,Mat_Prop.rho,Mat_Prop.PoRat,outer_radius,thickness);
+[Ke,Me] = Super_Element_Generator(Nodes_L,IEN_L,Mat_Prop.MoE,Mat_Prop.rho,Mat_Prop.PoRat,outer_radius,thickness);
 
 
 
