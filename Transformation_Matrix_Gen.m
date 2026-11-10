@@ -1,12 +1,8 @@
-function [T,a] = Transformation_Matrix_Gen(Nodes,IEN,e,vref)
+function [T,a] = Transformation_Matrix_Gen(X1,X2,vref)
 
-if nargin < 4 || isempty(vref)
+if nargin < 3 || isempty(vref)
   vref = [0 0 1];
 end
-
-X2=Nodes(IEN(2,e),2:4);
-X1=Nodes(IEN(1,e),2:4);
-
 
 
 d = X2(:)' - X1(:)';

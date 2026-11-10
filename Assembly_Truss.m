@@ -1,9 +1,9 @@
-function [K] = Assembly_Truss(Ke,Type,ndof,LM,E_List,neq)
+function [K] = Assembly_Truss(Ke,Type,ndof,LM,nel,neq)
 
 
 %     fprintf('       Called Function: Assembly_Truss\n')
 %     fprintf('              Location:%s\n',pwd)
-%     fprintf('              Purpose: Obtain Global Stiffness or Mass matrix for Truss or Beam section\n\n') 
+%     fprintf('              Purpose: Obtain Global Stiffness or Mass matrix for Truss or Beam section\n\n')
 
 
 
@@ -13,7 +13,7 @@ K 	= zeros(neq);
 %% Assembly of K and M
 %fprintf('\nAssemblying...')
 
-for e = E_List
+for e = 1:nel
     for loop1 = 1:Type(2,e)*ndof
         i = LM(loop1,e);
         for loop2 =  1:Type(2,e)*ndof

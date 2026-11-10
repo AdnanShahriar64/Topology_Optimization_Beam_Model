@@ -1,4 +1,4 @@
-function[KeB,MeB]=Beam_3D_Elemental_Stiffness_Matrix(G,Ey,Ez,rho,A,a,J,Ix,Iy,Iz,ky,kz)
+function[KeB,MeB]=Beam_3D_Elemental_Stiffness_Matrix(G,E,rho,A,a,J,Ix,Iy,Iz,ky,kz)
 
 
 %% Obtain Stiffness matrix of Beam section for E=1, rho=1
@@ -6,10 +6,25 @@ function[KeB,MeB]=Beam_3D_Elemental_Stiffness_Matrix(G,Ey,Ez,rho,A,a,J,Ix,Iy,Iz,
 % if e==1
 %     fprintf('       Called Function (several times): Beam_3D_Elemental_Stiffness_Matrix\n')
 %     fprintf('              Location:%s\n',pwd)
-%     fprintf('              Purpose: Obtain Stiffness and Mass matrix for Truss section for each element\n\n')
+%     fprintf('              Purpose: Obtain Stiffness and Mass matrix for Bending component of each element\n\n')
 % end
 
+% | Input | Description | SI units |
+% |---|---|---|
+% | `G`   | Shear modulus, used for torsional stiffness and transverse shear stiffness. | Pa |
+% | `Ey`  | Young’s modulus used for bending **about local \(y\)**, associated with displacement along local \(z\). | Pa |
+% | `Ez`  | Young’s modulus used for bending **about local \(z\)**, associated with displacement along local \(y\). | Pa |
+% | `rho` | Material mass density. | kg/m³ |
+% | `A`   | Cross-sectional area. | m² |
+% | `a`   | **Half the element length:** \(a=L/2\). | m |
+% | `J`   | Saint-Venant torsion constant, used in torsional rigidity \(GJ\). Equals the polar area moment for circular sections. | m⁴ |
+% | `Ix`  | Polar second moment of area about the longitudinal local \(x\)-axis, used for torsional rotary inertia: \(I_x=I_y+I_z\). | m⁴ |
+% | `Iy`  | Second moment of area about local \(y\), used for bending rigidity \(E_yI_y\) and rotary inertia about \(y\). | m⁴ |
+% | `Iz`  | Second moment of area about local \(z\), used for bending rigidity \(E_zI_z\) and rotary inertia about \(z\). | m⁴ |
+% | `ky`  | Shear correction factor for transverse displacement along local \(y\); effective shear rigidity is \(k_yGA\). | Dimensionless |
+% | `kz`  | Shear correction factor for transverse displacement along local \(z\); effective shear rigidity is \(k_zGA\). | Dimensionless |
 
+Ey = E; Ez = E;
 ax = a; ay = a; az = a;
 
 V=A*a;
@@ -42,8 +57,6 @@ Phiy=3*Ey*Iy/(kz*G*A*ay^2);
      for i=1:12
          KeB(i,i)=KeB1(i,i);
      end
-
-     KeB=KeB;
 
 
 %% Mass matrix

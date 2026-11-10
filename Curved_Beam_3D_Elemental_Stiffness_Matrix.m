@@ -1,5 +1,4 @@
-function [KeB,MeB] = Curved_Beam_3D_Elemental_Stiffness_Matrix( ...
-    A,R,Theta,G,Ey,Ez,J,Ix,Iy,Iz,ky,kz,E,rho)
+function [KeB,MeB] = Curved_Beam_3D_Elemental_Stiffness_Matrix(A,R,Theta,G,Ey,Ez,J,Ix,Iy,Iz,ky,kz,E,rho)
 %CURVED_BEAM_3D_ELEMENTAL_STIFFNESS_MATRIX Analytical linear-local arc model.
 % REQUIRED INPUTS:
 % A: section area; R: centerline radius; Theta: positive arc angle (RADIANS).
